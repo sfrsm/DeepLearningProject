@@ -76,20 +76,26 @@ def Image2DCT(img):
             # block = padded_img[row_ind_1: row_ind_2, col_ind_1: col_ind_2]
             block = padded_img[row_ind_1: row_ind_2, col_ind_1: col_ind_2]
 
+            #calcular a media do block com numpy
+            # padded_img2[i, j] = np.average(block)
+            padded_img2[i, j] = np.mean(block)
+
+
+
             # apply 2D discrete cosine transform to the selected block
-            DCT = cv2.dct(block)
-
-            DCT_normalized = np.divide(DCT, QUANTIZATION_MAT).astype(int)
-
-            # reorder DCT coefficients in zig zag order by calling zigzag function
-            # it will give you a one dimentional array
-            reordered = zigzag(DCT_normalized)
-
-            # reshape the reorderd array back to (block size by block size) (here: 8-by-8)
-            reshaped = np.reshape(reordered, (block_size, block_size))
-
-            # copy reshaped matrix into padded_img on current block corresponding indices
-            padded_img[row_ind_1: row_ind_2, col_ind_1: col_ind_2] = reshaped
-            padded_img2[i, j] = padded_img[row_ind_1 , col_ind_1]
+            # DCT = cv2.dct(block)
+            #
+            # DCT_normalized = np.divide(DCT, QUANTIZATION_MAT).astype(int)
+            #
+            # # reorder DCT coefficients in zig zag order by calling zigzag function
+            # # it will give you a one dimentional array
+            # reordered = zigzag(DCT_normalized)
+            #
+            # # reshape the reorderd array back to (block size by block size) (here: 8-by-8)
+            # reshaped = np.reshape(reordered, (block_size, block_size))
+            #
+            # # copy reshaped matrix into padded_img on current block corresponding indices
+            # padded_img[row_ind_1: row_ind_2, col_ind_1: col_ind_2] = reshaped
+            # padded_img2[i, j] = padded_img[row_ind_1 , col_ind_1]
 
     return np.uint8(padded_img2)
